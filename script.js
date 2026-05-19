@@ -217,8 +217,13 @@ auth.onAuthStateChanged((user) => {
         loadAdminChatsList();
     } else {
         isAdmin = false;
-        if(navLogin) navLogin.innerText = "Admin Login";
-        if(mobileLogin) mobileLogin.innerText = "Admin Login";
+        if (user) {
+            if(navLogin) navLogin.innerText = "Log Out";
+            if(mobileLogin) mobileLogin.innerText = "Log Out";
+        } else {
+            if(navLogin) navLogin.innerText = "Log In";
+            if(mobileLogin) mobileLogin.innerText = "Log In";
+        }
         document.querySelector('.chat-header h4').innerText = "Admin Support";
         document.getElementById('chat-subtitle').innerText = "We typically reply in minutes";
         if (adminUnsubscribe) adminUnsubscribe();
