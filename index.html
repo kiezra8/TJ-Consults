@@ -11,6 +11,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Firebase Compat SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 </head>
 <body>
     <!-- Header -->
@@ -55,7 +60,7 @@
             <h1 class="reveal delay-1">Transforming Businesses with <br><span class="gradient-text">Strategy, Technology,</span> <br>and Innovation</h1>
             <p class="reveal delay-2">We help companies grow through consulting, software development, branding, and digital marketing.</p>
             <div class="hero-buttons reveal delay-3">
-                <a href="#contact" class="btn btn-primary">Get Free Consultation <i data-lucide="arrow-right"></i></a>
+                <a href="#contact" class="btn btn-primary">Get Consultation <i data-lucide="arrow-right"></i></a>
                 <a href="#services" class="btn btn-outline">View Our Services</a>
             </div>
         </div>
@@ -98,37 +103,37 @@
                 <p class="muted-text mx-auto">We offer a full suite of services designed to elevate your brand, optimize your operations, and accelerate your growth.</p>
             </div>
             <div class="services-grid">
-                <div class="service-card reveal-up">
+                <div class="service-card reveal-up" style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop');">
                     <div class="service-icon"><i data-lucide="bar-chart-3"></i></div>
                     <h3>Business Consulting</h3>
                     <p class="muted-text">Strategic guidance to optimize operations, increase profitability, and scale your business efficiently.</p>
                     <div class="service-link">Explore Service <i data-lucide="chevron-right"></i></div>
                 </div>
-                <div class="service-card reveal-up delay-1">
+                <div class="service-card reveal-up delay-1" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop');">
                     <div class="service-icon"><i data-lucide="code-2"></i></div>
                     <h3>Web Development</h3>
                     <p class="muted-text">High-performance, SEO-optimized, and visually stunning websites tailored to your brand identity.</p>
                     <div class="service-link">Explore Service <i data-lucide="chevron-right"></i></div>
                 </div>
-                <div class="service-card reveal-up delay-2">
+                <div class="service-card reveal-up delay-2" style="background-image: url('https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=2070&auto=format&fit=crop');">
                     <div class="service-icon"><i data-lucide="smartphone"></i></div>
                     <h3>Mobile App Development</h3>
                     <p class="muted-text">Native and cross-platform mobile applications that deliver exceptional user experiences.</p>
                     <div class="service-link">Explore Service <i data-lucide="chevron-right"></i></div>
                 </div>
-                <div class="service-card reveal-up">
+                <div class="service-card reveal-up" style="background-image: url('https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=80&w=2074&auto=format&fit=crop');">
                     <div class="service-icon"><i data-lucide="megaphone"></i></div>
                     <h3>Digital Marketing</h3>
                     <p class="muted-text">Data-driven marketing campaigns, SEO, and Google Business Profile optimization to drive traffic.</p>
                     <div class="service-link">Explore Service <i data-lucide="chevron-right"></i></div>
                 </div>
-                <div class="service-card reveal-up delay-1">
+                <div class="service-card reveal-up delay-1" style="background-image: url('https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=2000&auto=format&fit=crop');">
                     <div class="service-icon"><i data-lucide="pen-tool"></i></div>
                     <h3>Branding & Design</h3>
                     <p class="muted-text">Memorable brand identities, logos, and graphic design that resonate with your target audience.</p>
                     <div class="service-link">Explore Service <i data-lucide="chevron-right"></i></div>
                 </div>
-                <div class="service-card reveal-up delay-2">
+                <div class="service-card reveal-up delay-2" style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop');">
                     <div class="service-icon"><i data-lucide="cpu"></i></div>
                     <h3>AI & Automation</h3>
                     <p class="muted-text">Implement intelligent solutions to automate workflows and enhance decision-making processes.</p>
@@ -255,7 +260,7 @@
             <div class="cta-box reveal-up">
                 <h2>Ready to Grow Your Business?</h2>
                 <p>Let's discuss how our strategic consulting and digital solutions can take your company to the next level.</p>
-                <a href="#contact" class="btn btn-white">Book Your Free Consultation <i data-lucide="arrow-right"></i></a>
+                <a href="#contact" class="btn btn-white">Book Consultation <i data-lucide="arrow-right"></i></a>
             </div>
         </div>
     </section>
@@ -379,6 +384,35 @@
             </div>
         </div>
     </footer>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <button id="chat-toggle-btn" class="chat-toggle-btn">
+            <i data-lucide="message-circle"></i>
+        </button>
+        <div id="chat-window" class="chat-window hidden">
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <div class="chat-avatar" title="Admin Login" style="cursor:pointer;">TJ</div>
+                    <div>
+                        <h4>Admin Support</h4>
+                        <p id="chat-subtitle">We typically reply in minutes</p>
+                    </div>
+                </div>
+                <button id="chat-close-btn"><i data-lucide="x"></i></button>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <!-- Messages will appear here -->
+                <div class="message received">
+                    <p>Hello! How can we help you today? Leave a message and we'll get back to you!</p>
+                </div>
+            </div>
+            <form id="chat-form" class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Message..." autocomplete="off">
+                <button type="submit"><i data-lucide="send"></i></button>
+            </form>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
