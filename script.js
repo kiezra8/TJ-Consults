@@ -428,3 +428,70 @@ chatForm.addEventListener('submit', async (e) => {
         alert("Could not send message. Please check your connection.");
     }
 });
+
+// Open chat on Book Consultation
+const ctaBookBtn = document.getElementById('cta-book-btn');
+if (ctaBookBtn) {
+    ctaBookBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        chatWindow.classList.remove('hidden');
+        chatInput.focus();
+        lucide.createIcons();
+    });
+}
+
+// Open chat on Hero Consultation
+const heroConsultationBtn = document.getElementById('hero-consultation-btn');
+if (heroConsultationBtn) {
+    heroConsultationBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        chatWindow.classList.remove('hidden');
+        chatInput.focus();
+        lucide.createIcons();
+    });
+}
+
+// Open chat and send message on contact form submit
+const contactForm = document.getElementById('contact-form-el');
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const firstName = document.getElementById('contact-first-name').value.trim();
+        const lastName = document.getElementById('contact-last-name').value.trim();
+        const email = document.getElementById('contact-email').value.trim();
+        const service = document.getElementById('contact-service').value;
+        const msg = document.getElementById('contact-message').value.trim();
+        
+        const formattedText = `📝 New Inquiry:\n• Name: ${firstName} ${lastName}\n• Email: ${email}\n• Service: ${service}\n• Message: ${msg}`;
+        
+        try {
+            // Send inquiry to Firestore under the visitor's messages subcollection
+            await db.collection('chats').doc(visitorId).collection('messages').add({
+                text: formattedText,
+                sender: 'visitor',
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            
+            // Update the master chat doc
+            await db.collection('chats').doc(visitorId).set({
+                lastMessage: `Form: ${service} inquiry`,
+                lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
+                adminEmail: 'israelezrakisakye@gmail.com',
+                status: 'unread'
+            }, { merge: true });
+            
+            // Clear form
+            contactForm.reset();
+            
+            // Open the chat window so they can see the message sent!
+            chatWindow.classList.remove('hidden');
+            chatInput.focus();
+            lucide.createIcons();
+            
+        } catch (error) {
+            console.error("Error sending form data: ", error);
+            alert("We couldn't submit your form. You can message us directly in the chat window!");
+        }
+    });
+}

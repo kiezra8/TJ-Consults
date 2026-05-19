@@ -62,7 +62,7 @@
             <h1 class="reveal delay-1">Transforming Businesses with <br><span class="gradient-text">Strategy, Technology,</span> <br>and Innovation</h1>
             <p class="reveal delay-2">We help companies grow through consulting, software development, branding, and digital marketing.</p>
             <div class="hero-buttons reveal delay-3">
-                <a href="#contact" class="btn btn-primary">Get Consultation <i data-lucide="arrow-right"></i></a>
+                <a href="#" id="hero-consultation-btn" class="btn btn-primary">Get Consultation <i data-lucide="arrow-right"></i></a>
                 <a href="#services" class="btn btn-outline">View Our Services</a>
             </div>
         </div>
@@ -262,7 +262,7 @@
             <div class="cta-box reveal-up" style="background-image: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2074&auto=format&fit=crop');">
                 <h2>Ready to Grow Your Business?</h2>
                 <p>Let's discuss how our strategic consulting and digital solutions can take your company to the next level.</p>
-                <a href="#contact" class="btn btn-white">Book Consultation <i data-lucide="arrow-right"></i></a>
+                <a href="#" id="cta-book-btn" class="btn btn-white">Book Consultation <i data-lucide="arrow-right"></i></a>
             </div>
         </div>
     </section>
@@ -282,13 +282,13 @@
                             <p class="muted-text">Market Street, Kampala, Uganda</p>
                         </div>
                     </div>
-                    <div class="contact-method">
+                    <a href="tel:+256775743392" class="contact-method" style="text-decoration:none; color:inherit; display:flex;">
                         <div class="method-icon"><i data-lucide="phone"></i></div>
                         <div>
                             <h4>Call Us</h4>
                             <p class="muted-text">+256 775 743392</p>
                         </div>
-                    </div>
+                    </a>
                     <div class="contact-method">
                         <div class="method-icon"><i data-lucide="mail"></i></div>
                         <div>
@@ -299,24 +299,24 @@
                 </div>
             </div>
             <div class="contact-form-wrapper reveal-right">
-                <form class="contact-form">
+                <form id="contact-form-el" class="contact-form">
                     <div class="form-row">
                         <div class="form-group">
                             <label>First Name</label>
-                            <input type="text" placeholder="John">
+                            <input type="text" id="contact-first-name" placeholder="John" required>
                         </div>
                         <div class="form-group">
                             <label>Last Name</label>
-                            <input type="text" placeholder="Doe">
+                            <input type="text" id="contact-last-name" placeholder="Doe" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Email Address</label>
-                        <input type="email" placeholder="john@example.com">
+                        <input type="email" id="contact-email" placeholder="john@example.com" required>
                     </div>
                     <div class="form-group">
                         <label>Service Interested In</label>
-                        <select>
+                        <select id="contact-service">
                             <option>Business Consulting</option>
                             <option>Web Development</option>
                             <option>Mobile App Development</option>
@@ -326,9 +326,9 @@
                     </div>
                     <div class="form-group">
                         <label>Message</label>
-                        <textarea rows="4" placeholder="How can we help you?"></textarea>
+                        <textarea id="contact-message" rows="4" placeholder="How can we help you?" required></textarea>
                     </div>
-                    <button type="button" class="btn btn-primary w-full">Send Message</button>
+                    <button type="submit" class="btn btn-primary w-full">Send Message</button>
                 </form>
             </div>
         </div>
