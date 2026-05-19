@@ -188,7 +188,7 @@ const auth = firebase.auth();
 let isFirstLoad = true;
 
 // Secret admin login trigger (double click avatar)
-document.querySelector('.chat-avatar').addEventListener('dblclick', () => {
+const triggerLogin = () => {
     if (!isAdmin) {
         const provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider).catch(e => console.error(e));
@@ -197,17 +197,28 @@ document.querySelector('.chat-avatar').addEventListener('dblclick', () => {
             auth.signOut();
         }
     }
-});
+};
+
+document.querySelector('.chat-avatar').addEventListener('dblclick', triggerLogin);
+document.getElementById('nav-login-btn').addEventListener('click', (e) => { e.preventDefault(); triggerLogin(); });
+document.getElementById('mobile-login-btn').addEventListener('click', (e) => { e.preventDefault(); triggerLogin(); });
 
 auth.onAuthStateChanged((user) => {
+    const navLogin = document.getElementById('nav-login-btn');
+    const mobileLogin = document.getElementById('mobile-login-btn');
+    
     if (user && user.email === 'israelezrakisakye@gmail.com') {
         isAdmin = true;
+        if(navLogin) navLogin.innerText = "Log Out";
+        if(mobileLogin) mobileLogin.innerText = "Log Out";
         document.querySelector('.chat-header h4').innerText = "Admin Dashboard";
         document.getElementById('chat-subtitle').innerText = "Logged in as Admin";
         if (visitorUnsubscribe) visitorUnsubscribe();
         loadAdminChatsList();
     } else {
         isAdmin = false;
+        if(navLogin) navLogin.innerText = "Admin Login";
+        if(mobileLogin) mobileLogin.innerText = "Admin Login";
         document.querySelector('.chat-header h4').innerText = "Admin Support";
         document.getElementById('chat-subtitle').innerText = "We typically reply in minutes";
         if (adminUnsubscribe) adminUnsubscribe();
