@@ -228,22 +228,22 @@
             <div class="section-badge reveal-up">How We Work</div>
             <h2 class="reveal-up delay-1">Our Proven Process</h2>
             <div class="process-grid mt-5">
-                <div class="process-step reveal-up">
+                <div class="process-step reveal-up" style="background-image: url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop');">
                     <div class="step-number">1</div>
                     <h3>Discovery</h3>
                     <p class="muted-text">Understanding your business, goals, and target audience.</p>
                 </div>
-                <div class="process-step reveal-up delay-1">
+                <div class="process-step reveal-up delay-1" style="background-image: url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=2071&auto=format&fit=crop');">
                     <div class="step-number">2</div>
                     <h3>Strategy</h3>
                     <p class="muted-text">Developing a comprehensive plan tailored to your needs.</p>
                 </div>
-                <div class="process-step reveal-up delay-2">
+                <div class="process-step reveal-up delay-2" style="background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop');">
                     <div class="step-number">3</div>
                     <h3>Execution</h3>
                     <p class="muted-text">Implementing solutions with cutting-edge technology.</p>
                 </div>
-                <div class="process-step reveal-up delay-3">
+                <div class="process-step reveal-up delay-3" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop');">
                     <div class="step-number">4</div>
                     <h3>Growth</h3>
                     <p class="muted-text">Monitoring, optimizing, and scaling for long-term success.</p>
@@ -259,7 +259,7 @@
             <div class="cta-shape"></div>
         </div>
         <div class="container relative z-10 text-center">
-            <div class="cta-box reveal-up">
+            <div class="cta-box reveal-up" style="background-image: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2074&auto=format&fit=crop');">
                 <h2>Ready to Grow Your Business?</h2>
                 <p>Let's discuss how our strategic consulting and digital solutions can take your company to the next level.</p>
                 <a href="#contact" class="btn btn-white">Book Consultation <i data-lucide="arrow-right"></i></a>
@@ -395,6 +395,7 @@
         <div id="chat-window" class="chat-window hidden">
             <div class="chat-header">
                 <div class="chat-header-info">
+                    <button id="chat-back-btn" style="background:none; border:none; color:#fff; cursor:pointer; padding:0; margin-right:8px; display:none; align-items:center;"><i data-lucide="arrow-left"></i></button>
                     <div class="chat-avatar" title="Admin Login" style="cursor:pointer;">TJ</div>
                     <div>
                         <h4>Admin Support</h4>
@@ -413,6 +414,32 @@
                 <input type="text" id="chat-input" placeholder="Message..." autocomplete="off">
                 <button type="submit"><i data-lucide="send"></i></button>
             </form>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="auth-modal">
+        <div class="auth-modal-content">
+            <button id="auth-close" class="auth-close"><i data-lucide="x"></i></button>
+            <h3 id="auth-modal-title">Log In</h3>
+            <p id="auth-modal-desc">Access your TJGroup account or create a new one.</p>
+            <form id="auth-form-element">
+                <div class="form-group">
+                    <label for="auth-email">Email Address</label>
+                    <input type="email" id="auth-email" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="auth-password">Password</label>
+                    <input type="password" id="auth-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" id="auth-submit-btn" class="btn btn-primary w-full">Log In</button>
+            </form>
+            <div class="auth-toggle">
+                <span id="auth-toggle-text">Don't have an account?</span>
+                <a href="#" id="auth-toggle-btn">Sign Up</a>
+            </div>
+            <div class="auth-divider"><span>OR</span></div>
+            <button id="auth-google-btn" class="btn btn-outline w-full"><i data-lucide="chrome"></i> Continue with Google</button>
         </div>
     </div>
 

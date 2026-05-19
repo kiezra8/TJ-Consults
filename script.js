@@ -187,13 +187,93 @@ let adminSessionUnsubscribe = null;
 const auth = firebase.auth();
 let isFirstLoad = true;
 
-// Secret admin login trigger (double click avatar)
-const triggerLogin = () => {
-    if (!isAdmin) {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider).catch(e => console.error(e));
+// Auth Modal Elements
+const authModal = document.getElementById('auth-modal');
+const authClose = document.getElementById('auth-close');
+const authFormElement = document.getElementById('auth-form-element');
+const authEmailInput = document.getElementById('auth-email');
+const authPasswordInput = document.getElementById('auth-password');
+const authSubmitBtn = document.getElementById('auth-submit-btn');
+const authToggleBtn = document.getElementById('auth-toggle-btn');
+const authToggleText = document.getElementById('auth-toggle-text');
+const authModalTitle = document.getElementById('auth-modal-title');
+const authGoogleBtn = document.getElementById('auth-google-btn');
+
+let isSignUp = false;
+
+// Modal Controls
+const openAuthModal = () => {
+    authModal.classList.add('active');
+    lucide.createIcons();
+};
+
+const closeAuthModal = () => {
+    authModal.classList.remove('active');
+};
+
+authClose.addEventListener('click', closeAuthModal);
+
+// Toggle between Log In and Sign Up
+authToggleBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    isSignUp = !isSignUp;
+    if (isSignUp) {
+        authModalTitle.innerText = "Sign Up";
+        authSubmitBtn.innerText = "Create Account";
+        authToggleText.innerText = "Already have an account?";
+        authToggleBtn.innerText = "Log In";
     } else {
-        if(confirm("Log out of Admin Dashboard?")) {
+        authModalTitle.innerText = "Log In";
+        authSubmitBtn.innerText = "Log In";
+        authToggleText.innerText = "Don't have an account?";
+        authToggleBtn.innerText = "Sign Up";
+    }
+});
+
+// Handle Email/Password Auth
+authFormElement.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = authEmailInput.value.trim();
+    const password = authPasswordInput.value;
+    
+    if (isSignUp) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .then(() => {
+                alert("Account created successfully!");
+                closeAuthModal();
+            })
+            .catch(err => {
+                alert("Error creating account: " + err.message);
+            });
+    } else {
+        auth.signInWithEmailAndPassword(email, password)
+            .then(() => {
+                closeAuthModal();
+            })
+            .catch(err => {
+                alert("Login failed: " + err.message);
+            });
+    }
+});
+
+// Handle Google Login
+authGoogleBtn.addEventListener('click', () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider)
+        .then(() => {
+            closeAuthModal();
+        })
+        .catch(err => {
+            alert("Google Sign-In Failed: " + err.message + "\n\n(Note: Google login requires running on localhost. If offline/local file, please use Email/Password Sign Up!)");
+        });
+});
+
+// Login Trigger
+const triggerLogin = () => {
+    if (!auth.currentUser) {
+        openAuthModal();
+    } else {
+        if(confirm("Log out?")) {
             auth.signOut();
         }
     }
@@ -226,6 +306,7 @@ auth.onAuthStateChanged((user) => {
         }
         document.querySelector('.chat-header h4').innerText = "Admin Support";
         document.getElementById('chat-subtitle').innerText = "We typically reply in minutes";
+        document.getElementById('chat-back-btn').style.display = 'none';
         if (adminUnsubscribe) adminUnsubscribe();
         if (adminSessionUnsubscribe) adminSessionUnsubscribe();
         currentAdminChatVisitorId = null;
@@ -260,6 +341,7 @@ function loadAdminChatsList() {
     chatMessages.innerHTML = '';
     chatInput.placeholder = "Select a chat...";
     chatInput.disabled = true;
+    document.getElementById('chat-back-btn').style.display = 'none';
     
     adminUnsubscribe = db.collection('chats').orderBy('lastUpdated', 'desc')
       .onSnapshot(snapshot => {
@@ -284,9 +366,11 @@ function loadAdminChatsList() {
 
 function loadAdminChatSession(vId) {
     currentAdminChatVisitorId = vId;
-    chatMessages.innerHTML = '<div style="padding: 10px; font-size: 13px; cursor: pointer; color: var(--accent); font-weight:600; background:#f8fafc; border-radius:8px; text-align:center; margin-bottom:12px;" id="back-to-list">&larr; Back to chats</div>';
+    chatMessages.innerHTML = '';
     
-    document.getElementById('back-to-list').onclick = () => {
+    const backBtn = document.getElementById('chat-back-btn');
+    backBtn.style.display = 'flex';
+    backBtn.onclick = () => {
         if(adminSessionUnsubscribe) adminSessionUnsubscribe();
         currentAdminChatVisitorId = null;
         loadAdminChatsList();
@@ -297,11 +381,7 @@ function loadAdminChatSession(vId) {
 
     adminSessionUnsubscribe = db.collection('chats').doc(vId).collection('messages').orderBy('timestamp', 'asc')
       .onSnapshot(snapshot => {
-          // preserve back button
-          const backBtn = chatMessages.firstElementChild;
           chatMessages.innerHTML = '';
-          chatMessages.appendChild(backBtn);
-          
           snapshot.forEach(doc => {
               const data = doc.data();
               appendMessage(data.text, data.sender === 'admin' ? 'sent' : 'received');
